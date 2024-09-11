@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, url_for
 app = Flask(__name__)
 
 @app.route("/web")
 def web():
-    return """<!dostype html>
+    return """<!doctype html>
         <html>
            <body>
                <h1>web-сервер на flask<h1>
@@ -17,7 +17,7 @@ def author():
     group = "ФБИ-21"
     faculty = "ФБ"
     
-    return """<!dostype html>
+    return """<!doctype html>
         <html>
            <body>
                <p>Студент: """ + name + """<p>
@@ -26,3 +26,16 @@ def author():
                <a href="/web">web</a>
            </body>
         </html>"""
+
+@app.route('/lab1/oak')
+def oak():
+    path = url_for("static", filename="oak.jpg")
+    return '''
+<!doctype html>
+<html>
+    <body>
+        <h1>Дуб</h1>
+        <img src="''' + path + '''">
+    </body>
+</html>
+'''

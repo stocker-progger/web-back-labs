@@ -13,7 +13,7 @@ def web():
                <h1>web-сервер на flask<h1>
                <a href="/author">author</a> <br>
                <a href="/lab1/oak">Дуб</a> <br>
-               <a href="/lab1/count">Счетчик</a> <br>
+               <a href="/lab1/counter">Счетчик</a> <br>
            </body>
         </html>""", 200, {
             "X-Server": "sample",
@@ -64,10 +64,16 @@ def counter():
 <!doctype html>
 <html>
     <body>
-        Сколько раз вы сюда заходили:''' + str(count) + '''
+        Сколько раз вы сюда заходили:''' + str(count) + '''<br>
+        <a href="/lab1/decounter">Очистить</a> <br>
     </body>
 </html>
 '''
+@app.route('/lab1/decounter')
+def decounter():
+    global count
+    count = 0
+    return redirect("/lab1/counter")
 
 @app.route('/info')
 def info():

@@ -5,6 +5,32 @@ app = Flask(__name__)
 def not_found(err):
     return "нет такой страницы", 404
 
+@app.route('/')
+@app.route('/index')
+def index():
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>НГТУ, ФБ, Лабораторные работы</title>
+        <link rel="stylesheet" href="static/lab1.css">
+    </head>
+    <body>
+        <header>НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных</header>
+        <main> 
+             <div class ="menu">
+                <ol>
+                    <li><a href="/lab1">Первая лабораторная</a></li>
+                </ol>
+            </div>
+        </main>
+        <footer>
+            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
+        </footer>
+    </body>
+    </html>
+    '''
+
 @app.route("/lab1/web")
 def web():
     return """<!doctype html>

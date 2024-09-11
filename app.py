@@ -39,9 +39,14 @@ def author():
 @app.route('/lab1/oak')
 def oak():
     path = url_for("static", filename="oak.jpg")
+    css_style_path = url_for("static", filename="lab1.css")
     return '''
 <!doctype html>
 <html>
+    <head>
+        <title>Oak Tree</title>
+        <link rel="stylesheet" href="''' + css_style_path + '''">
+    </head>
     <body>
         <h1>Дуб</h1>
         <img src="''' + path + '''">

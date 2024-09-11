@@ -15,7 +15,10 @@ def web():
                <a href="/lab1/oak">Дуб</a> <br>
                <a href="/lab1/count">Счетчик</a> <br>
            </body>
-        </html>"""
+        </html>""", 200, {
+            "X-Server": "sample",
+            'Content-Type': 'text/plain; charset=utf-8'
+            }
 
 @app.route("/author")
 def author():

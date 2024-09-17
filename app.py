@@ -3,7 +3,73 @@ app = Flask(__name__)
 
 @app.errorhandler(404)
 def not_found(err):
-    return "нет такой страницы", 404
+    return "Нет такой страницы", 404
+
+@app.route('/lab1/400')
+def bad_request():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Запрос некорректен</h1>
+            </body>
+        </html>
+        ''', 400
+
+@app.route('/lab1/401')
+def unauthorized():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Необходима авторизация</h1>
+            </body>
+        </html>
+        ''', 401
+
+@app.route('/lab1/402')
+def payment_required():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Требуется оплата</h1>
+            </body>
+        </html>
+        ''', 401
+
+@app.route('/lab1/403')
+def forbidden():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Доступ запрещен</h1>
+            </body>
+        </html>
+        ''', 403
+
+@app.route('/lab1/405')
+def method_not_allowed():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Метод запроса недопустим</h1>
+            </body>
+        </html>
+        ''', 405
+
+@app.route('/lab1/418')
+def im_a_teapot():
+    return '''
+        <!doctype html>
+        <html>
+            <body>
+                <h1>Запрос не может быть выполнен, так как сервер является чайником</h1>
+            </body>
+        </html>
+        ''', 418
 
 @app.route('/')
 @app.route('/index')

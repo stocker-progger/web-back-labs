@@ -228,3 +228,25 @@ def created():
     </body>
 </html>
 ''', 201
+
+@app.route('/lab1/error')
+def trigger_error():
+    return 1 / 0
+
+@app.errorhandler(500)
+def internal_error(err):
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Ошибка на сервере</title>
+        <link rel="stylesheet" href="static/lab1.css">
+    <body>
+            <div class="container">
+                <h1>Произошла ошибка на сервере</h1>
+                <p>К сожалению, при обработке вашего запроса возникла ошибка. Мы работаем над её исправлением.</p>
+                <a href="/">Вернуться на главную</a>
+            </div>
+        </body>
+    </html>
+    ''', 500

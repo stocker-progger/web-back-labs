@@ -3,7 +3,25 @@ app = Flask(__name__)
 
 @app.errorhandler(404)
 def not_found(err):
-    return "Нет такой страницы", 404
+    path_to_pic = url_for("static", filename="i.webp")
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Страница не найдена</title>
+        <link rel="stylesheet" href="static/lab1.css">
+    </head>
+        <body>
+            <div class="container">
+                <h1>Ой, страница не найдена!</h1>
+                <p>К сожалению, запрашиваемая вами страница не существует. Пожалуйста, проверьте URL или вернитесь на главную.</p>
+                <img src="''' + path_to_pic + '''">
+                <br>
+                <a href="/">Вернуться на главную</a>
+            </div>
+        </body>
+    </html>
+    ''', 404
 
 @app.route('/lab1/400')
 def bad_request():
@@ -136,7 +154,7 @@ def web():
            </body>
         </html>""", 200, {
             "X-Server": "sample",
-            'Content-Type': 'text/plain; charset=utf-8'
+            'Content-Type': 'text/html; charset=utf-8'
             }
 
 @app.route("/lab1/author")
@@ -145,7 +163,8 @@ def author():
     group = "ФБИ-21"
     faculty = "ФБ"
     
-    return """<!doctype html>
+    return """
+    <!doctype html>
         <html>
            <body>
                <p>Студент: """ + name + """<p>

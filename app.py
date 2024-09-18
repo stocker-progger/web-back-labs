@@ -142,9 +142,11 @@ def lab1():
                 <li><a href="/lab1/oak">Дуб</a></li>
                 <li><a href="/lab1/counter">Счетчик</a></li>
                 <li><a href="/lab1/customlg">Заголовки</a></li>
-                <li><a href="/lab1/created">Создано</a></li>
                 <li><a href="/lab1/error500">Ошибка500</a></li>
                 <li><a href="/lab1/web">Сервер</a></li>
+                <li><a href="/lab1/created">Посадить дуб</a></li>
+                <li><a href="/lab1/delete">Вырыть дуб</a></li>
+                <li><a href="/lab1/resource">Статус дуба</a></li>
             </ul>
         </main>
         <footer>

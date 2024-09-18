@@ -133,7 +133,19 @@ def lab1():
                 называемых микрофреймворков — минималистичных каркасов
                 веб-приложений, сознательно предоставляющих лишь самые базовые возможности.
             </p> <br>
-            <a href="/">Возврат на гланую страницу</a> <br>
+            <a href="/">Возврат на главную страницу</a> <br>
+
+            <h2>Список роутов</h2>
+            <ul>
+                <li><a href="/">Главная страница</a></li>
+                <li><a href="/lab1/author">Автор</a></li>
+                <li><a href="/lab1/oak">Дуб</a></li>
+                <li><a href="/lab1/counter">Счетчик</a></li>
+                <li><a href="/lab1/customlg">Заголовки</a></li>
+                <li><a href="/lab1/created">Создано</a></li>
+                <li><a href="/lab1/error500">Ошибка500</a></li>
+                <li><a href="/lab1/web">Сервер</a></li>
+            </ul>
         </main>
         <footer>
             Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
@@ -142,15 +154,13 @@ def lab1():
     </html>
     '''
 
+
 @app.route("/lab1/web")
 def web():
     return """<!doctype html>
         <html>
            <body>
                <h1>web-сервер на flask<h1>
-               <a href="/lab1/author">author</a> <br>
-               <a href="/lab1/oak">Дуб</a> <br>
-               <a href="/lab1/counter">Счетчик</a> <br>
            </body>
         </html>""", 200, {
             "X-Server": "sample",
@@ -229,7 +239,7 @@ def created():
 </html>
 ''', 201
 
-@app.route('/lab1/error')
+@app.route('/lab1/error500')
 def trigger_error():
     return 1 / 0
 
@@ -238,18 +248,20 @@ def internal_error(err):
     return '''
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>Ошибка на сервере</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    <body>
-            <div class="container">
+        <head>
+            <title>Ошибка на сервере</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+        <body>
+            <div>
                 <h1>Произошла ошибка на сервере</h1>
-                <p>К сожалению, при обработке вашего запроса возникла ошибка. Мы работаем над её исправлением.</p>
+                <p>К сожалению, при обработке вашего запроса возникла ошибка. Учите матиматику...</p>
                 <a href="/">Вернуться на главную</a>
             </div>
         </body>
     </html>
     ''', 500
+
 
 @app.route('/lab1/customlg')
 def custom_route():

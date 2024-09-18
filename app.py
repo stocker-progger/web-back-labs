@@ -227,18 +227,6 @@ def decounter():
 def info():
     return redirect("/lab1/author")
 
-@app.route('/lab1/created')
-def created():
-    return '''
-<!doctype html>
-<html>
-    <body>
-      <h1>Создано успешно</h1>
-      <div><i>что-то создано...</i></div>
-    </body>
-</html>
-''', 201
-
 @app.route('/lab1/error500')
 def trigger_error():
     return 1 / 0
@@ -274,10 +262,10 @@ def custom_route():
     <link rel="stylesheet" href="/static/lab1.css">
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>Дубовые дубы</h1>
         <p>Большинство дубов — крупные, мощные деревья. Многие виды этого рода принадлежат к числу вечнозелёных растений с кожистыми листьями, сохраняющимися на растении по нескольку лет. У других видов листья опадают ежегодно или, высыхая, остаются на дереве и разрушаются постепенно. Большинство вечнозелёных видов имеют цельные листья, остальные — лопастные.</p>
-        <img src="''' + path_to_img + '''" alt="Изображение для лабораторной работы">
+        <img src=''' + path_to_img + '''>
         <p>Цветки раздельнополые, мужские и женские находятся на одном и том же растении. Женские цветки образуют небольшие пучки или серёжки, мужские собраны в висящие или стоячие, часто длинные серёжки.</p>
         <p>Цветочные покровы простые, слабо развитые, но при основании женских цветов формируется множество чешуевидных листочков, расположенных на кольчатом валике, который является разросшимся цветоложем. При созревании плодов этот валик вместе со своими чешуями разрастается ещё больше и таким образом формируется характерное блюдце или «шапочка» — плюска, которая облекает снизу дубовый плод, или жёлудь. У разных видов дуба величина желудей и форма чешуек крайне разнообразны: у одних чешуйки весьма малы, у других, как у дуба венгерского, длиной почти в сантиметр, отвёрнуты и т. д. Завязь цветков дуба почти всегда трёхгнёздая; но во время созревания плодов разрастается только одно гнездо и получается односемянный плод с крепким кожистым околоплодником, причисляемый к числу орехообразных плодов.</p>
         <a href="/">Вернуться на главную</a>
@@ -289,3 +277,106 @@ def custom_route():
         'X-Custom-Header-1': 'ba',
         'X-Custom-Header-2': 'nok'
     }
+
+# Переменная для хранения состояния ресурса (создан или нет)
+resource_created = False
+
+# Обработчик для создания ресурса
+@app.route('/lab1/created')
+def created():
+    to_img = url_for('static', filename='дуб_м.jpg') 
+    path_to_img = url_for('static', filename='oak.jpg') 
+    global resource_created
+    if resource_created:
+        return '''
+        <!doctype html>
+        <html>
+        <head>
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+            <body>
+                <h1>Отказано!</h1>
+                <img src=''' + path_to_img + '''>
+                <p>Дуб уже посажен.</p>
+            </body>
+        </html>
+        ''', 400
+    else:
+        resource_created = True
+        return '''
+        <!doctype html>
+        <head>
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+        <html>
+            <body>
+                <h1>Успешно!</h1>
+                <img src=''' + to_img + '''>
+                <p>Дуб был успешно посажен.</p>
+            </body>
+        </html>
+        ''', 201
+
+# Обработчик для удаления ресурса
+@app.route('/lab1/delete')
+def delete():
+    hole = url_for('static', filename='яма.jpg') 
+    grass = url_for('static', filename='трава.webp') 
+    global resource_created
+    if resource_created:
+        resource_created = False
+        return '''
+        <!doctype html>
+        <head>
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+        <html>
+            <body>
+                <h1>Успешно!</h1>
+                <img src=''' + hole + '''>
+                <p>Дуб был успешно вырыт.</p>
+            </body>
+        </html>
+        ''', 200
+    else:
+        return '''
+        <!doctype html>
+        <head>
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+        <html>
+            <body>
+                <h1>Отказано!</h1>
+                <img src=''' + grass + '''>
+                <p>Дуб не существует.</p>
+            </body>
+        </html>
+        ''', 400
+    
+# Страница, показывающая статус ресурса
+@app.route('/lab1/resource')
+def resource_status():
+    global resource_created
+    if resource_created:
+        status = "Дуб посажен"
+    else:
+        status = "Дуб ещё не посажен"
+    
+    return f'''
+    <!doctype html>
+    <html>
+        <head>
+            <title>Статус ресурса</title>
+            <link rel="stylesheet" href="/static/lab1.css">
+        </head>
+        <body>
+            <h1>Статус дуба: {status}</h1>
+            <a href="/lab1/created">Посадить дуб</a><br>
+            <a href="/lab1/delete">Вырыть дуб</a>
+        </body>
+    </html>
+    '''

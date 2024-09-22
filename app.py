@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for, redirect, render_template
 app = Flask(__name__)
 
 @app.errorhandler(404)
@@ -9,7 +9,7 @@ def not_found(err):
     <html>
     <head>
         <title>Страница не найдена</title>
-        <link rel="stylesheet" href="static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -502,3 +502,9 @@ def add_flower(name):
     </body>
 </html>
 '''
+
+@app.route('/lab2/example')
+def example():
+    name = 'Данил Трохин'
+    return render_template('example.html', name=name)
+

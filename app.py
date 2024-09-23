@@ -587,3 +587,23 @@ def lab2():
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
     return render_template('filter.html', phrase=phrase)
+
+@app.route('/lab2/calc/<int:a>/<int:b>')
+def calculate(a, b):
+    return f'''
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Калькулятор</title>
+        </head>
+        <body>
+            <h1>Расчёт с параметрами:</h1>
+            <p>{a} + {b} = {a + b}</p>
+            <p>{a} - {b} = {a - b}</p>
+            <p>{a} * {b} = {a * b}</p>
+            <p>{a} / {b} = {(a / b) if b != 0 else 'Деление на ноль'}</p>
+            <p>{a}<sup>{b}</sup> = {a ** b}</p>
+        </body>
+    </html>
+    '''
+

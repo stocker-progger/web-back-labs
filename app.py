@@ -189,6 +189,7 @@ def index():
              <div class ="menu">
                 <ol>
                     <li><a href="/lab1">Первая лабораторная</a></li>
+                    <li><a href="/lab2">Вторая лабораторная</a></li>
                 </ol>
             </div>
         </main>
@@ -274,13 +275,12 @@ def author():
 @app.route('/lab1/oak')
 def oak():
     path = url_for("static", filename="oak.jpg")
-    css_style_path = url_for("static", filename="lab1.css")
     return '''
 <!DOCTYPE html>
 <html>
     <head>
         <title>Oak Tree</title>
-        <link rel="stylesheet" href="''' + css_style_path + '''">
+        <link rel="stylesheet" href="/static/lab1.css">
     </head>
     <body>
         <h1>Дуб</h1>
@@ -406,7 +406,6 @@ def created():
         </html>
         ''', 201
 
-# Обработчик для удаления ресурса
 @app.route('/lab1/delete')
 def delete():
     hole = url_for('static', filename='яма.jpg') 
@@ -444,7 +443,6 @@ def delete():
         </html>
         ''', 400
     
-# Страница, показывающая статус ресурса
 @app.route('/lab1/resource')
 def resource_status():
     global resource_created
@@ -606,6 +604,13 @@ def calculate(a, b):
         </body>
     </html>
     '''
+@app.route('/lab2/calc/')
+def calc():
+    return redirect('/lab2/calc/1/1')
+
+@app.route('/lab2/calc/<int:a>/')
+def calc_one(a):
+    return redirect(f'/lab2/calc/{a}/1')
 
 books = [
     {"author": "Лев Толстой", "title": "Война и мир", "genre": "Роман", "pages": 1225},

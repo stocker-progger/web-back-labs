@@ -623,3 +623,15 @@ books = [
 @app.route('/lab2/books')
 def show_books():
     return render_template('books.html', books=books)
+
+places = [
+    {"name": "Собор Александра Невского", "description": "Был построен аж в 1899 году!", "image":"собор.jfif"},
+    {"name": "Театр оперы и балета", "description": "Самый большой театр России!", "image": "новат.jfif"},
+    {"name": "Новосибирский зоопарк имени Р. А. Шило", "description": "Один из крупнейших зоопарков России, содержащий больше 11 тыс. животных.", "image": "зоо.jfif"},
+    {"name": "Музей железнодорожной техники", "description": "Железная дорога и поезда сыграли немалую роль в развитии Новосибирска, поэтому заслужили собственный музей.", "image": "жд.jfif"},
+    {"name": "Театр «Глобус»", "description": "Просто красивое место.", "image": "глобус.jfif"}
+]
+
+@app.route('/lab2/places')
+def show_places():
+    return render_template('places.html', places=places)

@@ -1,5 +1,10 @@
-from flask import Blueprint, url_for, redirect
+from flask import Blueprint, url_for, redirect, render_template
 lab2 = Blueprint('lab2', __name__)
+
+
+@lab2.route('/lab2/')
+def laba():
+    return render_template('lab2.html')
 
 
 @lab2.route('/lab2/a')
@@ -40,12 +45,26 @@ def flowers(flower_id):
 
 @lab2.route('/lab2/add_flower/')
 def no_flower():
-    return "вы не задали имя цветка!", 400
+    return f'''
+    <!DOCTYPE html>
+        <html>
+            <head>
+                <title>Ошибка!</title>
+                <link rel="stylesheet" href="/static/lab1.css">
+            </head>
+            <body>
+                <p>вы не задали имя цветка!</p>
+                <a href="/lab2/all_flowers">Посмотреть все цветы</a><br>
+                <a href="/lab2/add_flower/">Добавить новый цветок</a>
+            </body>
+        </html>
+        ''', 400
+
 
 
 @lab2.route('/lab2/add_flower/<name>')
 def add_flower(name):
-    flower_list.lab2end(name)
+    flower_list.append(name) 
     return f'''
     <!DOCTYPE html>
     <html>
@@ -58,6 +77,8 @@ def add_flower(name):
             <p> Название нового цветка: {name}</p>
             <p> Всего цветов: {len(flower_list)}</p>
             <p> Полный список: {flower_list}</p>
+            <a href="/lab2/all_flowers">Посмотреть все цветы</a><br>
+            <a href="/lab2/add_flower/">Добавить новый цветок</a>
         </body>
     </html>
     '''
@@ -88,24 +109,19 @@ def all_flowers():
     '''
 
 
-@lab2.route('/lab2/all_flowers_extra')
-def all_flowers_extra():
-    return render_template('flowers.html', flowers=flower_list)
-
-
 @lab2.route('/lab2/del_flower/<int:flower_id>')
 def del_flower(flower_id):
     if flower_id >= len(flower_list):
         return "Такого цветка нет", 404
     else:
         del flower_list[flower_id]
-        return redirect(url_for('all_flowers'))
+        return redirect(url_for('lab2.all_flowers')) 
 
 
 @lab2.route('/lab2/delete_flowers')
 def del_flowers():
     flower_list.clear()
-    return f'''
+    return '''
     <!DOCTYPE html>
     <html>
         <head>
@@ -135,11 +151,6 @@ def example():
     return render_template('example.html',
                            name=name, lab_num=lab_num, group=group,
                            course=course, fruits=fruits)
-
-
-@lab2.route('/lab2/')
-def lab2():
-    return render_template('lab2.html')
 
 
 @lab2.route('/lab2/filters')

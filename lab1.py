@@ -153,7 +153,7 @@ def im_a_teapot():
 
 
 @lab1.route('/lab1')
-def lab1():
+def lab():
     return '''
     <!DOCTYPE html>
     <html>

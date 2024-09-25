@@ -12,13 +12,13 @@ app.register_blueprint(lab3)
 
 @app.errorhandler(404)
 def not_found(err):
-    path_to_pic = url_for("static", filename="i.webp")
+    path_to_pic = url_for("static", filename="lab1/i.webp")
     return '''
     <!DOCTYPE html>
     <html>
     <head>
         <title>Страница не найдена</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -46,7 +46,7 @@ def index():
     <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных</header>
@@ -72,7 +72,7 @@ def internal_error(err):
     <html>
         <head>
             <title>Ошибка на сервере</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <body>
             <div>

@@ -9,7 +9,7 @@ def bad_request():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -34,7 +34,7 @@ def unauthorized():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -59,7 +59,7 @@ def payment_required():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -84,7 +84,7 @@ def forbidden():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -109,7 +109,7 @@ def method_not_allowed():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -134,7 +134,7 @@ def im_a_teapot():
     <html>
     <head>
         <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Ошибки тоже могут быть красивыми..</header>
@@ -159,7 +159,7 @@ def lab():
     <html>
     <head>
         <title>Лабораторная работа 1</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <header>Лабораторная работа 1</header>
@@ -217,7 +217,7 @@ def author():
     <html>
     <head>
         <title>Страница автора</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
         <body>
             <p>Студент: """ + name + """<p>
@@ -230,13 +230,13 @@ def author():
 
 @lab1.route('/lab1/oak')
 def oak():
-    path = url_for("static", filename="oak.jpg")
+    path = url_for("static", filename="lab1/oak.jpg")
     return '''
 <!DOCTYPE html>
 <html>
     <head>
         <title>Oak Tree</title>
-        <link rel="stylesheet" href="/static/lab1.css">
+        <link rel="stylesheet" href="/static/lab1/lab1.css">
     </head>
     <body>
         <h1>Дуб</h1>
@@ -283,13 +283,13 @@ def trigger_error():
 
 @lab1.route('/lab1/customlg')
 def custom_route():
-    path_to_img = url_for('static', filename='oak.jpg') 
+    path_to_img = url_for('static', filename='lab1/oak.jpg') 
     return '''
 <!DOCTYPE html>
 <html>
 <head>
     <title>НГТУ, ФБ, Лабораторные работы</title>
-    <link rel="stylesheet" href="/static/lab1.css">
+    <link rel="stylesheet" href="/static/lab1/lab1.css">
 </head>
 <body>
     <div>
@@ -315,8 +315,8 @@ resource_created = False
 
 @lab1.route('/lab1/created')
 def created():
-    path_to_img = url_for('static', filename='oak.jpg') 
-    to_img = url_for('static', filename='дуб_м.jpg') 
+    path_to_img = url_for('static', filename='lab1/oak.jpg') 
+    to_img = url_for('static', filename='lab1/дуб_м.jpg') 
     global resource_created
     if resource_created:
         return '''
@@ -324,7 +324,7 @@ def created():
         <html>
         <head>
             <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
             <body>
                 <h1>Отказано!</h1>
@@ -339,7 +339,7 @@ def created():
         <!DOCTYPE html>
         <head>
             <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <html>
             <body>
@@ -353,8 +353,8 @@ def created():
 
 @lab1.route('/lab1/delete')
 def delete():
-    hole = url_for('static', filename='яма.jpg') 
-    grass = url_for('static', filename='трава.webp') 
+    hole = url_for('static', filename='lab1/яма.jpg') 
+    grass = url_for('static', filename='lab1/трава.webp') 
     global resource_created
     if resource_created:
         resource_created = False
@@ -362,7 +362,7 @@ def delete():
         <!DOCTYPE html>
         <head>
             <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <html>
             <body>
@@ -377,7 +377,7 @@ def delete():
         <!DOCTYPE html>
         <head>
             <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <html>
             <body>
@@ -402,7 +402,7 @@ def resource_status():
     <html>
         <head>
             <title>Статус ресурса</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <body>
             <h1>Статус дуба: {status}</h1>

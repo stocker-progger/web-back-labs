@@ -4,7 +4,7 @@ lab2 = Blueprint('lab2', __name__)
 
 @lab2.route('/lab2/')
 def laba():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 
 @lab2.route('/lab2/a')
@@ -30,7 +30,7 @@ def flowers(flower_id):
         <html>
             <head>
                 <title>Информация о цветке</title>
-                <link rel="stylesheet" href="/static/lab1.css">
+                <link rel="stylesheet" href="/static/lab1/lab1.css">
             </head>
             <body>
                 <h1>Информация о цветке</h1>
@@ -50,7 +50,7 @@ def no_flower():
         <html>
             <head>
                 <title>Ошибка!</title>
-                <link rel="stylesheet" href="/static/lab1.css">
+                <link rel="stylesheet" href="/static/lab1/lab1.css">
             </head>
             <body>
                 <p>вы не задали имя цветка!</p>
@@ -70,7 +70,7 @@ def add_flower(name):
     <html>
         <head>
             <title>Добавление цветка</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <body>
             <h1>Добавлен новый цветок</h1>
@@ -95,7 +95,7 @@ def all_flowers():
     <html>
         <head>
             <title>Список всех цветов</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <body>
             <h1>Все цветы</h1>
@@ -126,7 +126,7 @@ def del_flowers():
     <html>
         <head>
             <title>Список цветов очищен</title>
-            <link rel="stylesheet" href="/static/lab1.css">
+            <link rel="stylesheet" href="/static/lab1/lab1.css">
         </head>
         <body>
             <h1>Список цветов был очищен</h1>
@@ -148,7 +148,7 @@ def example():
         {'name': 'мандарины', 'price': 95},
         {'name': 'манго', 'price': 321},
     ]
-    return render_template('example.html',
+    return render_template('lab2/example.html',
                            name=name, lab_num=lab_num, group=group,
                            course=course, fruits=fruits)
 
@@ -156,7 +156,7 @@ def example():
 @lab2.route('/lab2/filters')
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
-    return render_template('filter.html', phrase=phrase)
+    return render_template('lab2/filter.html', phrase=phrase)
 
 
 @lab2.route('/lab2/calc/<int:a>/<int:b>')
@@ -205,7 +205,7 @@ books = [
 
 @lab2.route('/lab2/books')
 def show_books():
-    return render_template('books.html', books=books)
+    return render_template('lab2/books.html', books=books)
 
 
 places = [
@@ -219,4 +219,4 @@ places = [
 
 @lab2.route('/lab2/places')
 def show_places():
-    return render_template('places.html', places=places)
+    return render_template('lab2/places.html', places=places)

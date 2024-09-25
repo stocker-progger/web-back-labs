@@ -25,3 +25,11 @@ def del_cookie():
     resp.delete_cookie('age', '20')
     resp.delete_cookie('name_color', 'magenta')
     return resp
+
+
+@lab3.route('/lab3/form1')
+def form1():
+    user = request.args.get('user')
+    age = request.args.get('age')
+    sex = request.args.get('sex')
+    return render_template('form1.html', user=user, age=age, sex=sex)

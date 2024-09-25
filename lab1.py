@@ -313,7 +313,6 @@ def custom_route():
 resource_created = False
 
 
-# Обработчик для создания ресурса
 @lab1.route('/lab1/created')
 def created():
     path_to_img = url_for('static', filename='oak.jpg') 

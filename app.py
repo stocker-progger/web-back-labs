@@ -55,6 +55,7 @@ def index():
                 <ol>
                     <li><a href="/lab1">Первая лабораторная</a></li>
                     <li><a href="/lab2/">Вторая лабораторная</a></li>
+                    <li><a href="/lab3/">Третья лабораторная</a></li>
                 </ol>
             </div>
         </main>

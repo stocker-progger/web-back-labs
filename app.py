@@ -1,5 +1,8 @@
 from flask import Flask, url_for, redirect, render_template
+from lab1 import lab1
+
 app = Flask(__name__)
+app.register_blueprint(lab1)
 
 @app.errorhandler(404)
 def not_found(err):
@@ -28,150 +31,6 @@ def not_found(err):
     </html>
     ''', 404
 
-@app.route('/lab1/400')
-def bad_request():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Запрос некорректен!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 400
-
-
-@app.route('/lab1/401')
-def unauthorized():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Необходима авторизация!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 401
-
-@app.route('/lab1/402')
-def payment_required():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Требуется оплата!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 402
-
-@app.route('/lab1/403')
-def forbidden():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Доступ запрещен!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 403
-
-@app.route('/lab1/405')
-def method_not_allowed():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Метод запроса недопустим!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 405
-
-@app.route('/lab1/418')
-def im_a_teapot():
-    return '''
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Ошибка</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <header>Ошибки тоже могут быть красивыми..</header>
-        <main>
-            <div>
-                <h1>Запрос не может быть выполнен, так как сервер является чайником!</h1>
-                <a href="/">Вернуться на главную</a>
-            </div>
-        </main>
-        <footer>
-            Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024
-        </footer>
-    </body>
-    </html>
-    ''', 418
 
 @app.route('/')
 @app.route('/index')
@@ -197,6 +56,7 @@ def index():
     </body>
     </html>
     '''
+
 
 @app.route('/lab1')
 def lab1():
@@ -239,85 +99,6 @@ def lab1():
     '''
 
 
-@app.route("/lab1/web")
-def web():
-    return """<!DOCTYPE html>
-        <html>
-           <body>
-               <h1>web-сервер на flask<h1>
-           </body>
-        </html>""", 200, {
-            "X-Server": "sample",
-            'Content-Type': 'text/html; charset=utf-8'
-            }
-
-@app.route("/lab1/author")
-def author():
-    name = "Трохин Данил Витальевич"
-    group = "ФБИ-21"
-    faculty = "ФБ"
-    
-    return """
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Страница автора</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-        <body>
-            <p>Студент: """ + name + """<p>
-            <p>Студент: """ + group + """<p>
-            <p>Студент: """ + faculty + """<p>
-            <a href="/lab1/web">web</a>
-        </body>
-    </html>"""
-
-@app.route('/lab1/oak')
-def oak():
-    path = url_for("static", filename="oak.jpg")
-    return '''
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Oak Tree</title>
-        <link rel="stylesheet" href="/static/lab1.css">
-    </head>
-    <body>
-        <h1>Дуб</h1>
-        <img src="''' + path + '''">
-    </body>
-</html>
-'''
-
-count = 0
-
-@app.route('/lab1/counter')
-def counter():
-    global count
-    count += 1
-    return '''
-<!DOCTYPE html>
-<html>
-    <body>
-        Сколько раз вы сюда заходили:''' + str(count) + '''<br>
-        <a href="/lab1/decounter">Очистить</a> <br>
-    </body>
-</html>
-'''
-@app.route('/lab1/decounter')
-def decounter():
-    global count
-    count = 0
-    return redirect("/lab1/counter")
-
-@app.route('/lab1/info')
-def info():
-    return redirect("/lab1/author")
-
-@app.route('/lab1/error500')
-def trigger_error():
-    return 1 / 0
-
 @app.errorhandler(500)
 def internal_error(err):
     return '''
@@ -338,142 +119,18 @@ def internal_error(err):
     ''', 500
 
 
-@app.route('/lab1/customlg')
-def custom_route():
-    path_to_img = url_for('static', filename='oak.jpg') 
-    return '''
-<!DOCTYPE html>
-<html>
-<head>
-    <title>НГТУ, ФБ, Лабораторные работы</title>
-    <link rel="stylesheet" href="/static/lab1.css">
-</head>
-<body>
-    <div>
-        <h1>Дубовые дубы</h1>
-        <p>Большинство дубов — крупные, мощные деревья. Многие виды этого рода принадлежат к числу вечнозелёных растений с кожистыми листьями, сохраняющимися на растении по нескольку лет. У других видов листья опадают ежегодно или, высыхая, остаются на дереве и разрушаются постепенно. Большинство вечнозелёных видов имеют цельные листья, остальные — лопастные.</p>
-        <img src=''' + path_to_img + '''>
-        <p>Цветки раздельнополые, мужские и женские находятся на одном и том же растении. Женские цветки образуют небольшие пучки или серёжки, мужские собраны в висящие или стоячие, часто длинные серёжки.</p>
-        <p>Цветочные покровы простые, слабо развитые, но при основании женских цветов формируется множество чешуевидных листочков, расположенных на кольчатом валике, который является разросшимся цветоложем. При созревании плодов этот валик вместе со своими чешуями разрастается ещё больше и таким образом формируется характерное блюдце или «шапочка» — плюска, которая облекает снизу дубовый плод, или жёлудь. У разных видов дуба величина желудей и форма чешуек крайне разнообразны: у одних чешуйки весьма малы, у других, как у дуба венгерского, длиной почти в сантиметр, отвёрнуты и т. д. Завязь цветков дуба почти всегда трёхгнёздая; но во время созревания плодов разрастается только одно гнездо и получается односемянный плод с крепким кожистым околоплодником, причисляемый к числу орехообразных плодов.</p>
-        <a href="/">Вернуться на главную</a>
-    </div>
-</body>
-</html>
-    ''', 200, {
-        'Content-Language': 'ru',
-        'X-Custom-Header-1': 'ba',
-        'X-Custom-Header-2': 'nok'
-    }
-
-# Переменная для хранения состояния ресурса (создан или нет)
-resource_created = False
-
-# Обработчик для создания ресурса
-@app.route('/lab1/created')
-def created():
-    path_to_img = url_for('static', filename='oak.jpg') 
-    to_img = url_for('static', filename='дуб_м.jpg') 
-    global resource_created
-    if resource_created:
-        return '''
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
-        </head>
-            <body>
-                <h1>Отказано!</h1>
-                <img src=''' + path_to_img + '''>
-                <p>Дуб уже посажен.</p>
-            </body>
-        </html>
-        ''', 400
-    else:
-        resource_created = True
-        return '''
-        <!DOCTYPE html>
-        <head>
-            <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
-        </head>
-        <html>
-            <body>
-                <h1>Успешно!</h1>
-                <img src="''' + to_img + '''" height = "30%"  width="30%">
-                <p>Дуб был успешно посажен.</p>
-            </body>
-        </html>
-        ''', 201
-
-@app.route('/lab1/delete')
-def delete():
-    hole = url_for('static', filename='яма.jpg') 
-    grass = url_for('static', filename='трава.webp') 
-    global resource_created
-    if resource_created:
-        resource_created = False
-        return '''
-        <!DOCTYPE html>
-        <head>
-            <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
-        </head>
-        <html>
-            <body>
-                <h1>Успешно!</h1>
-                <img src="''' + hole + '''" width = "50%">
-                <p>Дуб был успешно вырыт.</p>
-            </body>
-        </html>
-        ''', 200
-    else:
-        return '''
-        <!DOCTYPE html>
-        <head>
-            <title>НГТУ, ФБ, Лабораторные работы</title>
-            <link rel="stylesheet" href="/static/lab1.css">
-        </head>
-        <html>
-            <body>
-                <h1>Отказано!</h1>
-                <img src="''' + grass + '''" width = "50%">
-                <p>Дуб не существует.</p>
-            </body>
-        </html>
-        ''', 400
-    
-@app.route('/lab1/resource')
-def resource_status():
-    global resource_created
-    if resource_created:
-        status = "Дуб посажен"
-    else:
-        status = "Дуб ещё не посажен"
-    
-    return f'''
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Статус ресурса</title>
-            <link rel="stylesheet" href="/static/lab1.css">
-        </head>
-        <body>
-            <h1>Статус дуба: {status}</h1>
-            <a href="/lab1/created">Посадить дуб</a><br>
-            <a href="/lab1/delete">Вырыть дуб</a>
-        </body>
-    </html>
-    '''
 @app.route('/lab2/a')
 def a1():
     return 'без слэша'
+
 
 @app.route('/lab2/a/')
 def a2():
     return 'со слэшем'
 
+
 flower_list = ['лилия', 'ландыш', 'ромашка', 'гвоздика']
+
 
 @app.route('/lab2/flowers/<int:flower_id>')
 def flowers(flower_id):
@@ -497,9 +154,11 @@ def flowers(flower_id):
         </html>
         '''
 
+
 @app.route('/lab2/add_flower/')
 def no_flower():
     return "вы не задали имя цветка!", 400
+
 
 @app.route('/lab2/add_flower/<name>')
 def add_flower(name):
@@ -519,6 +178,7 @@ def add_flower(name):
         </body>
     </html>
     '''
+
 
 @app.route('/lab2/all_flowers/')
 def all_flowers():
@@ -544,6 +204,7 @@ def all_flowers():
     </html>
     '''
 
+
 @app.route('/lab2/all_flowers_extra')
 def all_flowers_extra():
     return render_template('flowers.html', flowers=flower_list)
@@ -556,6 +217,7 @@ def del_flower(flower_id):
     else:
         del flower_list[flower_id]
         return redirect(url_for('all_flowers'))
+
 
 @app.route('/lab2/delete_flowers')
 def del_flowers():
@@ -575,6 +237,7 @@ def del_flowers():
     </html>
     '''
 
+
 @app.route('/lab2/example')
 def example():
 
@@ -590,6 +253,7 @@ def example():
                            name=name, lab_num=lab_num, group=group,
                            course=course, fruits=fruits)
 
+
 @app.route('/lab2/')
 def lab2():
     return render_template('lab2.html')
@@ -598,6 +262,7 @@ def lab2():
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
     return render_template('filter.html', phrase=phrase)
+
 
 @app.route('/lab2/calc/<int:a>/<int:b>')
 def calculate(a, b):
@@ -617,13 +282,17 @@ def calculate(a, b):
         </body>
     </html>
     '''
+
+
 @app.route('/lab2/calc/')
 def calc():
     return redirect('/lab2/calc/1/1')
 
+
 @app.route('/lab2/calc/<int:a>/')
 def calc_one(a):
     return redirect(f'/lab2/calc/{a}/1')
+
 
 books = [
     {"author": "Лев Толстой", "title": "Война и мир", "genre": "Роман", "pages": 1225},
@@ -638,9 +307,11 @@ books = [
     {"author": "Антон Чехов", "title": "Чайка", "genre": "Пьеса", "pages": 120}
 ]
 
+
 @app.route('/lab2/books')
 def show_books():
     return render_template('books.html', books=books)
+
 
 places = [
     {"name": "Собор Александра Невского", "description": "Был построен аж в 1899 году!", "image":"собор.jfif"},
@@ -649,6 +320,7 @@ places = [
     {"name": "Музей железнодорожной техники", "description": "Железная дорога и поезда сыграли немалую роль в развитии Новосибирска, поэтому заслужили собственный музей.", "image": "жд.jfif"},
     {"name": "Театр «Глобус»", "description": "Просто красивое место.", "image": "глобус.jfif"}
 ]
+
 
 @app.route('/lab2/places')
 def show_places():

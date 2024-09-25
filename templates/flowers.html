@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lab1.css')}}">
+    <title>Список цветов</title>
+</head>
+<body>
+    <h1>Список цветов</h1>
+    <ul>
+        {% for flower in flower_list %}
+        <li>{{ loop.index }}. {{ flower.name }} - {{ flower.price }} &#x20bd; 
+            <a href="{{ url_for('del_flower', flower_id=loop.index0) }}">удалить</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('del_flowers') }}">Удалить все цветы</a>
+
+    <form action="{{ url_for('add_flower', name='Новый цветок', price=100) }}" method="get">
+        <label for="flower_name">Добавить цветок:</label>
+        <input type="text" name="flower_name" placeholder="название">
+        <input type="number" name="price" placeholder="цена">
+        <button type="submit">Добавить</button>
+    </form>
+</body>
+</html>

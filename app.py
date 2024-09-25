@@ -544,8 +544,21 @@ def all_flowers():
     </html>
     '''
 
+@app.route('/lab2/all_flowers_extra')
+def all_flowers_extra():
+    return render_template('flowers.html', flowers=flower_list)
+
+
+@app.route('/lab2/del_flower/<int:flower_id>')
+def del_flower(flower_id):
+    if flower_id >= len(flower_list):
+        return "Такого цветка нет", 404
+    else:
+        del flower_list[flower_id]
+        return redirect(url_for('all_flowers'))
+
 @app.route('/lab2/delete_flowers')
-def delete_flowers():
+def del_flowers():
     flower_list.clear()
     return f'''
     <!DOCTYPE html>
@@ -640,3 +653,5 @@ places = [
 @app.route('/lab2/places')
 def show_places():
     return render_template('places.html', places=places)
+
+

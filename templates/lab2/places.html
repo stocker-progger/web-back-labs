@@ -13,12 +13,13 @@
         <div>
             {% for place in places %}
             <div>
-                <img src="{{ url_for('static', filename=place.image) }}">
                 <h2>{{ place.name }}</h2>
                 <p>{{ place.description }}</p>
+                <img src="{{ url_for('static', filename='lab2/' + place.image) }}">
             </div>
             {% endfor %}
         </div>
+    
     </main>
     <footer>
         &copy; Трохин Данил Витальевич, ФБИ-21, 3 курс, 2024

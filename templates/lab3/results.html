@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+</head>
+<body>
+    <h1>Результаты поиска товаров</h1>
+
+    <p>Диапазон цен: от {{ min_price }} до {{ max_price }}</p>
+
+    <ul>
+        {% if products %}
+            {% for product in products %}
+                <li>{{ product.name }} — {{ product.price }} руб. (Бренд: {{ product.brand }}, Цвет: {{ product.color }})</li>
+            {% endfor %}
+        {% else %}
+            <li>Товары не найдены в заданном диапазоне.</li>
+        {% endif %}
+    </ul>
+
+    <a href="/lab3/search">Назад к поиску</a>
+</body>
+</html>

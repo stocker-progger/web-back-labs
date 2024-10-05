@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Поиск товаров</title>
-</head>
-<body>
-    <h1>Поиск товаров по цене</h1>
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
     <form action="/lab3/results" method="get">
         <label for="min_price">Минимальная цена:</label>
         <input type="number" name="min_price" min="0" step="0.01" required><br><br>
@@ -16,5 +12,4 @@
 
         <button type="submit">Искать</button>
     </form>
-</body>
-</html>
+{% endblock %}

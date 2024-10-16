@@ -159,7 +159,7 @@ def login():
             session['login'] = login
             return redirect('/lab4/login')
 
-    error = 'Неверные логин и/или пароль'
+    error = 'Неверные логин и/или парольь'
     return render_template('lab4/login.html', error=error, login=login, authorized=False)
 
 @lab4.route('/lab4/logout', methods=['POST'])

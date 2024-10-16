@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for, request, redirect, render_template
+from flask import Blueprint, url_for, request, redirect, render_template, session
 lab4 = Blueprint('lab4', __name__)
 
 
@@ -129,26 +129,40 @@ def tree():
 
     return redirect('/lab4/tree')
 
-
 users = [
-    {'login': 'alex', 'password': '123'},
-    {'login': 'bob', 'password': '555'},
-    {'login': 'sofa', 'password': '222'},
-    {'login': 'momo', 'password': '333'}
+    {'login': 'alex', 'password': '123', 'name': 'Alex Johnson', 'gender': 'male'},
+    {'login': 'bob', 'password': '555', 'name': 'Bob Smith', 'gender': 'male'},
+    {'login': 'sofa', 'password': '222', 'name': 'Sofia Petrova', 'gender': 'female'},
+    {'login': 'momo', 'password': '333', 'name': 'Monica Garcia', 'gender': 'female'}
 ]
 
-
-@lab4.route('/lab4/login', methods = ['GET', 'POST'])
+@lab4.route('/lab4/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        if 'login' in session:
+            authorized = True
+            user = next(u for u in users if u['login'] == session['login'])
+            return render_template('lab4/login.html', authorized=authorized, user=user)
         return render_template('lab4/login.html', authorized=False)
 
     login = request.form.get('login')
     password = request.form.get('password')
 
+    if not login:
+        return render_template('lab4/login.html', error='Не введён логин', login=login, authorized=False)
+
+    if not password:
+        return render_template('lab4/login.html', error='Не введён пароль', login=login, authorized=False)
+
     for user in users:
         if login == user['login'] and password == user['password']:
-            return render_template('lab4/login.html', error='Успешная авторизация', login=login, authorized=False)
+            session['login'] = login
+            return redirect('/lab4/login')
 
     error = 'Неверные логин и/или пароль'
-    return render_template('lab4/login.html', error=error,  authorized=False)
+    return render_template('lab4/login.html', error=error, login=login, authorized=False)
+
+@lab4.route('/lab4/logout', methods=['POST'])
+def logout():
+    session.pop('login', None)
+    return redirect('/lab4/login')

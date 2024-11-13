@@ -19,5 +19,5 @@
             <button>Регистрация</button>
         </a>
     </div>
-    <p>Ваш статус: <strong>{{ username }}</strong></p>
+    <p>Ваш статус: <strong>{{ login if login else 'Anonymous' }}</strong></p>
 {% endblock %}

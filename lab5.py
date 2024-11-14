@@ -16,10 +16,12 @@ def db_connect():
     if current_app.config['DB_TYPE'] == 'postgres':
         conn = psycopg2.connect(
             host='127.0.0.1',
-            database='ivan_ivanov_knowledge_base',
-            user='ivan_ivanov_knowledge_base',
-            password='123'
+            database='danil_trokhin_knowledge_base',
+            user='danil_trokhin_knowledge_base',
+            password='123',
+            client_encoding='UTF8'
         )
+
         cur = conn.cursor(cursor_factory=RealDictCursor)
     else:
         dir_path = path.dirname(path.realpath(__file__))
@@ -120,9 +122,9 @@ def list():
     login_id = cur.fetchone()["id"]
 
     if current_app.config['DB_TYPE'] == 'postgres':
-        cur.execute("SELECT * FROM articles WHERE login_id=%s;", (login_id,))
+        cur.execute("SELECT * FROM articles WHERE user_id=%s;", (login_id,))
     else:
-        cur.execute("SELECT * FROM articles WHERE login_id=?;", (login_id,))
+        cur.execute("SELECT * FROM articles WHERE user_id=?;", (login_id,))
 
     articles = cur.fetchall()
 
@@ -153,9 +155,9 @@ def create():
     login_id = cur.fetchone()["id"]
 
     if current_app.config['DB_TYPE'] == 'postgres':
-        cur.execute("INSERT INTO articles(login_id, title, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
+        cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
     else:
-        cur.execute("INSERT INTO articles(login_id, title, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
+        cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
 
     db_close(conn, cur)
 

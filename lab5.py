@@ -155,9 +155,9 @@ def create():
     login_id = cur.fetchone()["id"]
 
     if current_app.config['DB_TYPE'] == 'postgres':
-        cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
+        cur.execute("INSERT INTO articles(user_id, titke, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
     else:
-        cur.execute("INSERT INTO articles(user_id, title, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
+        cur.execute("INSERT INTO articles(user_id, titke, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
 
     db_close(conn, cur)
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for, request, redirect, render_template, session
+from flask import Blueprint, url_for, request, redirect, render_template, session, current_app
 lab5 = Blueprint('lab5', __name__)
 import psycopg2
 from psycopg2.extras import RealDictCursor
@@ -9,25 +9,25 @@ from os import path
 
 @lab5.route('/lab5/')
 def laba5():
-    return render_template('lab5/lab5.html', login = session.get('login'))
+    return render_template('lab5/lab5.html', login=session.get('login'))
 
 
 def db_connect():
     if current_app.config['DB_TYPE'] == 'postgres':
         conn = psycopg2.connect(
-            host = '127.0.0.1',
-            database = 'ivan_ivanov_knowledge_base',
-            user = 'ivan_ivanov_knowledge_base',
-            password = '123'
+            host='127.0.0.1',
+            database='ivan_ivanov_knowledge_base',
+            user='ivan_ivanov_knowledge_base',
+            password='123'
         )
-        cur = conn.cursor(cursor_factory = RealDictCursor)
+        cur = conn.cursor(cursor_factory=RealDictCursor)
     else:
         dir_path = path.dirname(path.realpath(__file__))
         db_path = path.join(dir_path, "database.db")
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        
+
     return conn, cur
 
 
@@ -37,7 +37,7 @@ def db_close(conn, cur):
     conn.close()
 
 
-@lab5.route('/lab5/register', methods = ['GET', 'POST'])
+@lab5.route('/lab5/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('lab5/register.html')
@@ -50,23 +50,31 @@ def register():
 
     conn, cur = db_connect()
 
-    cur.execute(f"SELECT login FROM users WHERE login=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT login FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT login FROM users WHERE login=?;", (login,))
+
     if cur.fetchone():
         db_close(conn, cur)
         return render_template('lab5/register.html', error="Такой пользователь уже существует")
 
     password_hash = generate_password_hash(password)
 
-    cur.execute(f"INSERT INTO users (login, password) VALUES (%s, %s);", (login, password_hash))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("INSERT INTO users (login, password) VALUES (%s, %s);", (login, password_hash))
+    else:
+        cur.execute("INSERT INTO users (login, password) VALUES (?, ?);", (login, password_hash))
+
     db_close(conn, cur)
     return render_template('lab5/success.html', login=login)
 
 
-@lab5.route('/lab5/login', methods = ['GET', 'POST'])
+@lab5.route('/lab5/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('lab5/login.html')
-    
+
     login = request.form.get('login')
     password = request.form.get('password')
 
@@ -75,7 +83,11 @@ def login():
 
     conn, cur = db_connect()
 
-    cur.execute(f"SELECT * FROM users WHERE login=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT * FROM users WHERE login=?;", (login,))
+
     user = cur.fetchone()
 
     if not user:
@@ -100,19 +112,26 @@ def list():
 
     conn, cur = db_connect()
 
-    cur.execute(f"SELECT id FROM users WHERE login=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT id FROM users WHERE login=?;", (login,))
+
     login_id = cur.fetchone()["id"]
 
-    cur.execute(f"SELECT * FROM articles WHERE user_id=%s;", (login, ))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM articles WHERE login_id=%s;", (login_id,))
+    else:
+        cur.execute("SELECT * FROM articles WHERE login_id=?;", (login_id,))
+
     articles = cur.fetchall()
-    
+
     db_close(conn, cur)
 
     return render_template('/lab5/articles.html', articles=articles)
 
 
-
-@lab5.route('/lab5/create', methods = ['GET', 'POST'])
+@lab5.route('/lab5/create', methods=['GET', 'POST'])
 def create():
     login = session.get('login')
     if not login:
@@ -126,14 +145,18 @@ def create():
 
     conn, cur = db_connect()
 
-    cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT id FROM users WHERE login=?;", (login,))
+
     login_id = cur.fetchone()["id"]
 
-    cur.execute("INSERT INTO articles(user_id, titke, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("INSERT INTO articles(login_id, title, article_text) VALUES (%s, %s, %s);", (login_id, title, article_text))
+    else:
+        cur.execute("INSERT INTO articles(login_id, title, article_text) VALUES (?, ?, ?);", (login_id, title, article_text))
 
     db_close(conn, cur)
 
     return redirect('/lab5')
-
-
-

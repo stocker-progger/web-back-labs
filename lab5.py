@@ -103,7 +103,7 @@ def login():
     session['login'] = login
     db_close(conn, cur)
 
-    return render_template('lab5/success.html', login=login)
+    return render_template('lab5/lab5.html', login=login)
 
 
 @lab5.route('/lab5/list')

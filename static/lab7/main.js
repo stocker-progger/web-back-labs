@@ -36,7 +36,7 @@ function fillFilmList() {
             tr.append(tdAction);
 
             tbody.append(tr);
-        }
+        } 
     })
 }
 

@@ -62,7 +62,7 @@ films = [
     },
 ]
 
-@lab7.route('/lab7/rest-api/films/<int:id>', methods=['GET'])
+@lab7.route('/lab7/rest-api/films/', methods=['GET'])
 def get_films(id):
     return films[id]
 
@@ -70,7 +70,53 @@ def get_films(id):
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['DELETE'])
 def del_films(id):
     if id < 0 or id >= len(films):
-        return {'error': 'Film not found'}, 404
+        return {'error': 'Фильм не найден'}, 404
     del films[id]
     return '', 204
+
+
+@lab7.route('/lab7/rest-api/films/<int:id>', methods=['PUT'])
+def put_films(id):
+    if id < 0 or id >= len(films):
+        return {"error": "Фильм не найден"}, 404
+    film = request.get_json()
+    
+    if 'title' not in film or film['title'] == '':
+        return {'title': 'Укажите название'}, 400
+    if 'title_ru' not in film or film['title_ru'] == '':
+        return {'title_ru': 'Укажите русское название'}, 400
+    if 'year' not in film or film['year'] == '':
+        return {'year': 'Укажите год'}, 400
+    if 'description' not in film or film['description'] == '':
+        return {'description': 'Заполните описание'}, 400
+
+    films[id] = film
+    return films[id]
+
+
+@lab7.route('/lab7/rest-api/films/', methods=['POST'])
+def add_film():
+    data = request.get_json()
+
+    if not data or 'title' not in data:
+        return {'error': 'Укажите название'}, 400 
+    if 'title_ru' not in data or data['title_ru'] == '':
+        return {'title_ru': 'Укажите русское название'}, 400
+    if 'year' not in data or data['year'] == '':
+        return {'year': 'Укажите год'}, 400
+    if 'description' not in data or data['description'] == '':
+        return {'description': 'Заполните описание'}, 400
+
+    new_film = {
+        'title': data['title'],
+        'title_ru': data['title_ru'],
+        'year': int(data['year']),
+        'description': data['description'],
+    }
+    
+    films.append(new_film)
+
+    new_index = len(films) - 1
+    return {'id': new_index}, 201
+
 

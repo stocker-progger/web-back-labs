@@ -16,6 +16,9 @@
     position: absolute;
     padding: 20px;
 }
+.error-message {
+    color: red;
+}
 </style>
 {% endblock %}
 
@@ -51,9 +54,11 @@
         <label>Год выпуска:</label>
         <input type="number" id="year">
             
-        <label>Описание:</label>
+        <label>Описание:
         <textarea id="description"></textarea>
-            
+        <div id="description-error" class="error-message"></div>
+        </label><br>
+
         <button onclick="sendFilm()">OK</button>
         <button onclick="cancel()">Отмена</button>
     </div>

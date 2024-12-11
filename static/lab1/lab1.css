@@ -63,13 +63,13 @@ div.menu {
     background-color: #ffffff;
   }
   
-  div.menu:hover {
+div.menu:hover {
     background-color: #cfc2a1;
     color: #ffffff;
     box-shadow: 0 0 10px #000000;
   }
   
-  h1 {
+h1 {
     font-family: Arial, sans-serif;
     font-size: 18px;
     font-weight: normal;
@@ -79,7 +79,7 @@ div.menu {
     margin-bottom: 10px;
   }
 
-  footer {
+footer {
     background-color: black;
     color: whitesmoke; 
     padding: 10px;
@@ -91,3 +91,16 @@ div.menu {
     left: 0;
   }
 
+  table {
+    border-collapse: collapse; 
+    width: 100%; 
+}
+
+th, td {
+    border: 1px solid black; 
+    text-align: left; 
+}
+
+th {
+    background-color: #f2f2f2; 
+}

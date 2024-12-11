@@ -18,7 +18,7 @@ films = [
         с подходящими для человечества условиями."
     },
         {
-        "title": "he Shawshank Redemption",
+        "title": "The Shawshank Redemption",
         "title_ru": "Побег из Шоушенка",
         "year": 1994,
         "description": "Бухгалтер Энди Дюфрейн обвинён в убийстве собственной жены и её любовника. Оказавшись в тюрьме под названием Шоушенк, \
@@ -105,10 +105,10 @@ def put_films(id):
 def add_film():
     data = request.get_json()
 
-    if not data or 'title' not in data:
-        return {'error': 'Укажите название'}, 400 
     if 'title_ru' not in data or data['title_ru'] == '':
         return {'title_ru': 'Укажите русское название'}, 400
+    if not data or 'title' not in data:
+        data['title'] = data['title_ru']
     if 'year' not in data or data['year'] == '':
         return {'year': 'Укажите год'}, 400
     if 'description' not in data or data['description'] == '':

@@ -1,0 +1,21 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Запустить Yandex Music API",
+            "program": "C:\Users\Danil\OneDrive\Рабочий стол\Учеба\3 курс/ydx.js", // Укажите путь к вашему основному файлу
+            "outFiles": ["C:\Users\Danil\OneDrive\Рабочий стол\Учеба\3 курс/ydx.js"], // Укажите пути к скомпилированным файлам
+            "env": {
+                "ACCESS_TOKEN": "y0_AgAAAABYGzLWAAG8XgAAAAEcCvcDAAAnLXOfZA5NYIc2-ya8tlUjsb5Gtg", // Укажите ваш токен доступа
+                "USER_ID": "troxindan", // Укажите ваш ID пользователя
+                "PLAYLIST_ID": "1001?utm_medium=copy_link" // Укажите ID плейлиста
+            },
+            "skipFiles": ["<node_internals>/**"]
+        }
+    ]
+}

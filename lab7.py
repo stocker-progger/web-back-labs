@@ -125,5 +125,3 @@ def add_film():
 
     new_index = len(films) - 1
     return {'id': new_index}, 201
-
-

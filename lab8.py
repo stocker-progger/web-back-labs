@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, session, request, redirec
 from werkzeug.security import generate_password_hash  # Не забудьте импортировать эту функцию
 from db import db
 from db.models import users, articles
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 
 lab8 = Blueprint('lab8', __name__)
 
@@ -61,3 +61,10 @@ def login():
 @login_required
 def article_list():
     return "список статей"
+
+@lab8.route('/lab8/logout/')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/lab8/')
+

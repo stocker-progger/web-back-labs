@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Новогодняя Лабораторная{% endblock %}</title>
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden; 
+        }
+
+        header {
+            font-size: 2em;
+            color: Red;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: Red;
+            margin-bottom: 20px;
+        }
+
+        .main-content {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .button {
+            background-color: #e74c3c;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"], input[type="number"], select {
+            padding: 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            width: 80%;
+        }
+
+        .congratulation-img {
+            width: 600px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 24px;
+            color: #979797;
+            user-select: none;
+            z-index: 9999;
+            pointer-events: none;
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <header>
+        {% block lab %}Новогодняя Лабораторная{% endblock %}
+    </header>
+
+    <div class="main-content">
+        {% block main %}Контент здесь{% endblock %}
+    </div>
+
+
+    <div class="snowflakes" aria-hidden="true">
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+        <span class="snowflake">❆</span>
+    </div>
+
+    <script>
+        // Генерируем случайное расположение снежинок и скорость их падения
+        const snowflakes = document.querySelectorAll('.snowflake');
+
+        snowflakes.forEach(snowflake => {
+            // Задаём случайную позицию по горизонтали
+            snowflake.style.left = Math.random() * 100 + 'vw'; // 100vw - полный экран
+            // Задаём случайную скорость падения
+            snowflake.style.animationDuration = Math.random() * 3 + 7 + 's'; // от 7 до 10 секунд
+            snowflake.style.animationDelay = Math.random() * 5 + 's'; // случайная задержка
+        });
+    </script>
+
+</body>
+</html>

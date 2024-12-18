@@ -1,0 +1,16 @@
+{% extends "lab9base.html" %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+    <div class="container">
+
+        <div class="congratulation">
+            <p>{{ congratulation }}</p>
+        </div>
+
+        <div>
+            <img src="{{ url_for('static', filename=image) }}" class="congratulation-img">
+        </div>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 
 lab9 = Blueprint('lab9', __name__)
 
@@ -6,6 +6,7 @@ lab9 = Blueprint('lab9', __name__)
 def lab9_name():
     if request.method == 'POST':
         username = request.form['username']
+        session['username'] = username
         return redirect(url_for('lab9.lab9_age', username=username))
     return render_template('lab9/lab9_name.html')
 
@@ -14,6 +15,7 @@ def lab9_age():
     username = request.args.get('username')
     if request.method == 'POST':
         age = request.form['age']
+        session['age'] = age
         return redirect(url_for('lab9.lab9_gender', username=username, age=age))
     return render_template('lab9/lab9_age.html', username=username)
 
@@ -23,6 +25,7 @@ def lab9_gender():
     age = request.args.get('age')
     if request.method == 'POST':
         gender = request.form['gender']
+        session['gender'] = gender
         return redirect(url_for('lab9.lab9_question', username=username, age=age, gender=gender))
     return render_template('lab9/lab9_sex.html', username=username, age=age)
 
@@ -34,6 +37,7 @@ def lab9_question():
 
     if request.method == 'POST':
         answer = request.form['answer']
+        session['answer'] = answer
         return redirect(url_for('lab9.lab9_question2', username=username, age=age, gender=gender, answer=answer))
 
     return render_template('lab9/lab9_question.html', username=username, age=age, gender=gender)
@@ -56,6 +60,7 @@ def lab9_question2():
 
     if request.method == 'POST':
         second_answer = request.form['answer']
+        session['second_answer'] = second_answer
         
         if answer == "Паста":  
             if second_answer == 'Карбонара':
@@ -88,6 +93,15 @@ def lab9_question2():
                     congratulation = f"С наступающим Новым годом, {username}! Пусть новый год принесет тебе столько счастья, сколько разных сыров в пицце с четырьмя сырами. Пусть жизнь будет насыщенной и успешной!"
                     image = "cheese.png"
 
+        session['congratulation'] = congratulation
+        session['image'] = image
         return render_template('lab9/lab9_final.html', congratulation=congratulation, image=image, username=username, age=age, gender=gender)
 
     return render_template('lab9/lab9_question2.html', username=username, age=age, gender=gender, question=question, option1=option1, option2=option2)
+
+
+@lab9.route('/lab9/reset', methods=['GET'])
+def lab9_reset():
+    session.clear()  
+    return redirect(url_for('lab9.lab9_name'))
+

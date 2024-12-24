@@ -4,23 +4,30 @@
 
 {% block main %}
 
-    {% if login %}
-        <p>Ваш статус: <strong>{{ login }}</strong></p>
+    {% if current_user.is_authenticated %}
+        <p>Ваш статус: <strong>{{ current_user.login }}</strong></p>
+        <form action="{{ url_for('lab8.logout') }}" method="POST">
+            <button type="submit">Выйти</button>
+        </form> 
     {% else %}
         <p>Ваш статус: <strong>Anonymous</strong></p>
-    {% endif %}
-    <div style="display: flex; justify-content: center; gap: 10px;">
         <a href="/lab8/login">
             <button>Вход</button>
         </a>
         <a href="/lab8/register">
             <button>Регистрация</button>
         </a>
-        <a href="/lab8/articles">
-            <button>Список статей</button>
-        </a>
-        <a href="/lab8/create">
-            <button>Создать статью</button>
-        </a>
+    {% endif %}
+    
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        {% if current_user.is_authenticated %}
+            <a href="/lab8/articles">
+                <button>Список статей</button>
+            </a>
+            <a href="/lab8/create">
+                <button>Создать статью</button>
+            </a>
+        {% endif %}
     </div>    
+
 {% endblock %}

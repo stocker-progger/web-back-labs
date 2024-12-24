@@ -2,9 +2,10 @@ from flask import Flask, url_for, redirect, render_template
 import os
 from os import path
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate  # Подключение миграций
+from flask_login import LoginManager
 from db import db
 from db.models import users
-from flask_login import LoginManager
 
 from lab1 import lab1
 from lab2 import lab2
@@ -15,10 +16,10 @@ from lab6 import lab6
 from lab7 import lab7
 from lab8 import lab8
 from lab9 import lab9
-from rgz import rgz
 
 app = Flask(__name__)
 
+# Настройка для flask-login
 login_manager = LoginManager()
 login_manager.login_view = 'lab8.login'
 login_manager.init_app(app)
@@ -27,14 +28,15 @@ login_manager.init_app(app)
 def load_users(login_id):
     return users.query.get(int(login_id))
 
-app.config['SECRET_KEY'] = os.environ.get('SECRT_KEY', 'секретно-секретный секрет')
+# Конфигурация Flask-приложения
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'supersecretkey12345')
 app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
-#app.secret_key = 'секретно-секретный секрет'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  
 
-
+# Конфигурация базы данных
 if app.config['DB_TYPE'] == 'postgres':
-    db_name = 'trohin_danil_orm'
-    db_user = 'trohin_danil_orm'
+    db_name = 'danil_orm'
+    db_user = 'danil_orm'
     db_password = '123'
     host_ip = '127.0.0.1'
     host_port = 5432
@@ -43,11 +45,16 @@ if app.config['DB_TYPE'] == 'postgres':
         f'postgresql://{db_user}:{db_password}@{host_ip}:{host_port}/{db_name}'
 else:
     dir_path = path.dirname(path.realpath(__file__))
-    db_path = path.join(dir_path, "trohin_danil_orm.db")
+    db_path = path.join(dir_path, "danil_orm.db")
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 
-db.init_app(app)
+# Инициализация SQLAlchemy
+db.init_app(app)  # Здесь мы только вызываем init_app
 
+# Инициализация миграций
+migrate = Migrate(app, db)
+
+# Регистрируем Blueprints
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
@@ -57,8 +64,6 @@ app.register_blueprint(lab6)
 app.register_blueprint(lab7)
 app.register_blueprint(lab8)
 app.register_blueprint(lab9)
-app.register_blueprint(rgz)
-
 
 @app.errorhandler(404)
 def not_found(err):
@@ -86,7 +91,6 @@ def not_found(err):
     </body>
     </html>
     ''', 404
-
 
 @app.route('/')
 @app.route('/index')
@@ -139,4 +143,3 @@ def internal_error(err):
         </body>
     </html>
     ''', 500
-
